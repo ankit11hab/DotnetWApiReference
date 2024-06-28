@@ -1,0 +1,103 @@
+# Compiled binary and executable files
+*.dll
+*.exe
+*.so
+*.dylib
+
+# Build directories
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
+
+# User-specific files (Mono)
+mono_crash.*
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Logs
+*.log
+
+# Local environment and settings
+.vscode/
+.vscode/*
+
+# Package directories
+packages/
+**/packages/*
+
+# NuGet packages
+*.nupkg
+*.snupkg
+
+# Paket dependency manager
+.paket/
+paket-files/
+
+# Microsoft Azure Web App publish settings
+PublishProfiles/
+
+# StyleCop
+StyleCopReport.xml
+
+# Resharper files
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Rider
+.idea/
+*.sln.iml
+
+# Backup & report files from converting an old project file
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Entity Framework
+*.edmx
+*.designer.cs
+*.edmx.sql
+
+# VS Code directories
+.vscode/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Common language infrastructure (CLI) files
+*.pyc
+*.pyo
+*.pyd
+
+# Windows Installer files
+*.msi
+*.cab
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# JetBrains Rider
+.idea/
+*.sln.iml
