@@ -1,9 +1,9 @@
 ﻿namespace Blog.Api;
 
-public record class BlogSummaryResponse
+public record struct BlogSummaryResponse
 (
     int Id,
     string Url,
-    string Rating,
+    int Rating,
     PersonSummaryResponse Owner
 );

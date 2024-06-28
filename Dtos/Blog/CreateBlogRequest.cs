@@ -3,6 +3,6 @@
 public record class CreateBlogRequest
 (
     string Url,
-    string Rating,
+    int Rating,
     int OwnerId
 );

@@ -4,6 +4,7 @@ public record class BlogDetailResponse
 (
     int Id,
     string Url,
-    string Rating,
-    PersonSummaryResponse Owner
+    int Rating,
+    PersonSummaryResponse Owner,
+    List<PostSummaryResponse> Posts
 );
