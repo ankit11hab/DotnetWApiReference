@@ -7,6 +7,7 @@
 # Build directories
 bin/
 obj/
+**/Migrations/
 
 # User-specific files
 *.user
