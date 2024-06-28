@@ -17,5 +17,5 @@ public class Blog
 
     // One-to-many
     public int OwnerId { get; set; }
-    public Person Owner { get; set; }
+    public Person Owner { get; set; } = null!;
 }
