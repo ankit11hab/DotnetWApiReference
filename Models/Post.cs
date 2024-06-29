@@ -17,12 +17,12 @@ public class Post
 
     // Shadow + Nav property for one-to-many
     public int BlogId { get; set; }
-    public Blog Blog { get; set; }
+    public Blog Blog { get; set; } = null!;
 
     // One-to-many
     public int AuthorId { get; set; }
-    public Person Author { get; set; }
+    public Person Author { get; set; } = null!;
 
     // Many-to-many
-    public List<PostTag> Tags { get; set; }
+    public List<Tag> Tags { get; set; } = [];
 }

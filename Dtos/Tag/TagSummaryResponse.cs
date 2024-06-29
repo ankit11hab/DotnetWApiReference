@@ -3,5 +3,5 @@
 public record class TagSummaryResponse
 (
     int Id,
-    string Name
+    string Title
 );

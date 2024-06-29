@@ -14,5 +14,5 @@ public class PersonPhoto
     public string Url { get; set; } = null!;
 
     // One-to-one
-    public Person Person { get; set; }
+    public Person Person { get; set; } = null!;
 }
