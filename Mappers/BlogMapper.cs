@@ -20,4 +20,15 @@ public static class BlogMapper
             blog.Owner.toPersonSummaryResponse()
         );
     }
+
+    // Blog -> DetailRes
+    public static BlogDetailResponse toBlogDetailResponse(this Blog blog) {
+        return new BlogDetailResponse(
+            blog.Id,
+            blog.Url!,
+            blog.Rating,
+            blog.Owner.toPersonSummaryResponse(),
+            blog.Posts.Select(p => p.toPostSummaryResponse()).ToList()
+        );
+    }
 }

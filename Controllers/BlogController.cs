@@ -25,9 +25,13 @@ public class BlogController : ControllerBase
     public async Task<IActionResult> GetBlog([FromRoute] int id) {
         var blog = await _dbContext.Blogs
                                 .Include(b => b.Owner)
+                                .Include(b => b.Posts)
+                                .ThenInclude(p => p.Author)
+                                .Include(b => b.Posts)
+                                .ThenInclude(p => p.Tags)
                                 .FirstOrDefaultAsync(b => b.Id == id);
         if(blog is null) return NotFound();
-        var blogRes = blog.toBlogSummaryResponse();
+        var blogRes = blog.toBlogDetailResponse();
         return Ok(blogRes);
     }
 

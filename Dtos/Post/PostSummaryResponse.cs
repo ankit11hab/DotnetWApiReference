@@ -3,7 +3,6 @@
 public record class PostSummaryResponse
 (
     string Title,
-    int BlogId,
-    int AuthorId,
-    List<int> Tags
+    PersonSummaryResponse Author,
+    List<TagSummaryResponse> Tags
 );

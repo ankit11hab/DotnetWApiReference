@@ -13,6 +13,15 @@ public static class PostMapper
         };
     }
 
+    // Post -> SummaryRes
+    public static PostSummaryResponse toPostSummaryResponse(this Post post) {
+        return new PostSummaryResponse(
+            post.Title,
+            post.Author.toPersonSummaryResponse(),
+            post.Tags.Select(t => t.toTagSummaryResponse()).ToList()
+        );
+    }
+    
     // Post -> DetailRes
     public static PostDetailResponse toPostDetailResponse(this Post post) {
         return new PostDetailResponse(
