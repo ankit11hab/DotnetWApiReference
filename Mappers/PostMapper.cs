@@ -32,4 +32,12 @@ public static class PostMapper
             post.Tags.Select(t => t.toTagSummaryResponse()).ToList()
         );
     }
+
+    // UpdateReq -> Post
+    public static void toPostFromUpdateRequest(this UpdatePostRequest req, Post post) {
+        post.Title = req.Title;
+        post.Content = req.Content;
+        post.BlogId = req.BlogId;
+        post.AuthorId = req.AuthorId;
+    }
 }
