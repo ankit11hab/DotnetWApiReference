@@ -31,4 +31,11 @@ public static class BlogMapper
             blog.Posts.Select(p => p.toPostSummaryResponse()).ToList()
         );
     }
+
+    // UpdateReq -> Blog
+    public static void toBlogFromUpdateRequest(this UpdateBlogRequest req, Blog blog) {
+        blog.Url = req.Url;
+        blog.Rating = req.Rating;
+        blog.OwnerId = req.OwnerId;
+    }
 }

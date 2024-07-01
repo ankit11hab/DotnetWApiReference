@@ -42,4 +42,22 @@ public class BlogController : ControllerBase
         await _dbContext.SaveChangesAsync();
         return Ok();
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateBlog([FromRoute] int id, [FromBody] UpdateBlogRequest req) {
+        var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == id);
+        if(blog is null) return NotFound();
+        req.toBlogFromUpdateRequest(blog);
+        await _dbContext.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBlog([FromRoute] int id) {
+        var blog = await _dbContext.Blogs.FirstOrDefaultAsync(b => b.Id == id);
+        if(blog is null) return NotFound();
+        _dbContext.Blogs.Remove(blog);
+        await _dbContext.SaveChangesAsync();
+        return Ok();
+    }
 }

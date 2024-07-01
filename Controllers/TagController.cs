@@ -29,4 +29,14 @@ public class TagController : ControllerBase
         await _dbContext.SaveChangesAsync();
         return Ok();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteTag([FromRoute] int id)
+    {
+        var tag = await _dbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
+        if(tag is null) return NotFound();
+        _dbContext.Tags.Remove(tag);
+        await _dbContext.SaveChangesAsync();
+        return Ok();
+    }
 }

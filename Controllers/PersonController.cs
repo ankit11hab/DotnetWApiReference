@@ -28,4 +28,23 @@ public class PersonController : ControllerBase
         await _dbContext.SaveChangesAsync();
         return Ok();
     }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdatePerson([FromBody] UpdatePersonRequest req)
+    {
+        var person = new Person() { Id = req.Id, Name = req.Name };
+        _dbContext.Persons.Update(person);
+        await _dbContext.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePerson([FromRoute] int id)
+    {
+        var person = await _dbContext.Persons.FirstOrDefaultAsync(p => p.Id == id);
+        if(person is null) return NotFound();
+        _dbContext.Persons.Remove(person);
+        await _dbContext.SaveChangesAsync();
+        return Ok();
+    }
 }
