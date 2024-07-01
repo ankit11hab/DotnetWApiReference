@@ -24,5 +24,5 @@ public class Post
     public Person Author { get; set; } = null!;
 
     // Many-to-many
-    public List<Tag> Tags { get; set; } = [];
+    public List<Tag> Tags { get; set; } = new List<Tag>();
 }

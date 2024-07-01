@@ -6,5 +6,5 @@ public class Tag
     public string Title { get; set; } = null!;
 
     // Many-to-many
-    public List<Post> Posts { get; set; } = [];
+    public List<Post> Posts { get; set; } = new List<Post>();
 }

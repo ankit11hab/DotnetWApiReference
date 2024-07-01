@@ -11,10 +11,10 @@ public class Person
     public string Name { get; set; } = null!;
 
     // Navs for one-to-many
-    public List<Blog> OwnedBlogs { get; set; }
-    public List<Post> AuthoredPosts { get; set; }
+    public List<Blog> OwnedBlogs { get; set; } = new List<Blog>();
+    public List<Post> AuthoredPosts { get; set; } = new List<Post>();
 
     // One-to-one foreign key
     public int? PhotoId { get; set; }
-    public PersonPhoto Photo { get; set; }
+    public PersonPhoto? Photo { get; set; }
 }
