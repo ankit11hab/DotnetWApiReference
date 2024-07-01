@@ -13,10 +13,16 @@ public class BlogController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllBlogs() {
-        var blogs = await _dbContext.Blogs
-                            .Include(b => b.Owner)
-                            .ToListAsync();
+    public async Task<IActionResult> GetAllBlogs([FromQuery] BlogQuery query) {
+        var blogsQ = _dbContext.Blogs
+                                .Include(b => b.Owner)
+                                .AsQueryable();
+        blogsQ = blogsQ.Where(b => b.Rating >= query.MinRating);
+        if(!string.IsNullOrEmpty(query.Url)) {
+            blogsQ = blogsQ.Where(b => b.Url != null && b.Url.Contains(query.Url));
+        }
+        int skip = (query.PageNumber - 1)*query.PageSize;
+        var blogs = await blogsQ.Skip(skip).Take(query.PageSize).ToListAsync();
         var blogsRes = blogs.Select(b => b.toBlogSummaryResponse());
         return Ok(blogsRes);
     }
