@@ -7,4 +7,5 @@ public interface IPersonService
     Task UpdateAsync(Person person);
     Task CreateAsync(Person person);
     Task DeleteAsync(Person person);
+    Task AddPhotoAsync(PersonPhoto photo);
 }

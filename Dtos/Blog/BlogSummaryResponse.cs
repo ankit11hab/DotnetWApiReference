@@ -3,7 +3,7 @@
 public record struct BlogSummaryResponse
 (
     int Id,
-    string Url,
+    string? Url,
     int Rating,
     PersonSummaryResponse Owner
 );

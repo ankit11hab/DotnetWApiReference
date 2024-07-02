@@ -15,7 +15,7 @@ public static class BlogMapper
     public static BlogSummaryResponse toBlogSummaryResponse(this Blog blog) {
         return new BlogSummaryResponse(
             blog.Id,
-            blog.Url!,
+            blog.Url,
             blog.Rating,
             blog.Owner.toPersonSummaryResponse()
         );

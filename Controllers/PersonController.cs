@@ -20,11 +20,30 @@ public class PersonController : ControllerBase
         return Ok(personsRes);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPersonById([FromRoute] int id)
+    {
+        var person = await _personService.GetByIdAsync(id);
+        if(person is null) return NotFound();
+        var personRes = person.toPersonDetailResponse();
+        return Ok(personRes);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreatePerson([FromBody] CreatePersonRequest req)
     {
         var person = req.toPersonFromCreateRequest();
         await _personService.CreateAsync(person);
+        return Created();
+    }
+
+    [HttpPost("photo")]
+    public async Task<IActionResult> CreatePersonPhoto([FromBody] CreatePersonPhotoRequest req)
+    {
+        var person = await _personService.GetByIdAsync(req.PersonId);
+        if(person is null) return NotFound();
+        var photo = req.toPersonPhotoFromCreateRequest(person);
+        await _personService.AddPhotoAsync(photo);
         return Created();
     }
 

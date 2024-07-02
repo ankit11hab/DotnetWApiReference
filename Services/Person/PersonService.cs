@@ -16,6 +16,12 @@ public class PersonService : IPersonService
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task AddPhotoAsync(PersonPhoto photo)
+    {
+        await _dbContext.PersonPhotos.AddAsync(photo);
+        await _dbContext.SaveChangesAsync();
+    }
+
     public async Task DeleteAsync(Person person)
     {
         _dbContext.Persons.Remove(person);
@@ -30,7 +36,9 @@ public class PersonService : IPersonService
 
     public async Task<Person?> GetByIdAsync(int id)
     {
-        var person = await _dbContext.Persons.FirstOrDefaultAsync(p => p.Id == id);
+        var person = await _dbContext.Persons
+                                        .Include(p => p.Photo)
+                                        .FirstOrDefaultAsync(p => p.Id == id);
         return person;
     }
 
