@@ -7,6 +7,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ITagService, TagService>();
+
 builder.Services.AddDbContext<BloggingContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("LocalSqliteConnection"));
 });

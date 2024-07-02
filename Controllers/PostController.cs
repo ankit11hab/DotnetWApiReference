@@ -7,19 +7,14 @@ namespace Blog.Api;
 [ApiController]
 public class PostController : ControllerBase
 {
-    private readonly BloggingContext _dbContext;
-    public PostController(BloggingContext dbContext) {
-        _dbContext = dbContext;
+    private readonly IPostService _postService;
+    public PostController(IPostService postService) {
+        _postService = postService;
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPost([FromRoute] int id) {
-        var post = await _dbContext.Posts
-                                .Include(p => p.Blog)
-                                .ThenInclude(b => b.Owner)
-                                .Include(p => p.Author)
-                                .Include(p => p.Tags)
-                                .FirstOrDefaultAsync(p => p.Id == id);
+        var post = await _postService.GetByIdAsync(id);
         if(post is null) return NotFound();
         var postRes = post.toPostDetailResponse();
         return Ok(postRes);
@@ -28,30 +23,26 @@ public class PostController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest req) {
         var post = req.toPostFromCreateRequest();
-        post.Tags = await _dbContext.Tags.Where(t => req.Tags.Contains(t.Id)).ToListAsync();
-        await _dbContext.Posts.AddAsync(post);
-        await _dbContext.SaveChangesAsync();
-        return Ok();
+        post.Tags = await _postService.GetTagsAsync(req.Tags);
+        await _postService.SaveAsync();
+        return Created();
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePost([FromRoute] int id, [FromBody] UpdatePostRequest req) {
-        var post = await _dbContext.Posts
-                                    .Include(p => p.Tags)
-                                    .FirstOrDefaultAsync(p => p.Id == id);
+        var post = await _postService.GetByIdAsync(id);
         if(post is null) return NotFound();
         req.toPostFromUpdateRequest(post);
-        post.Tags = await _dbContext.Tags.Where(t => req.Tags.Contains(t.Id)).ToListAsync();
-        await _dbContext.SaveChangesAsync();
+        post.Tags = await _postService.GetTagsAsync(req.Tags);
+        await _postService.SaveAsync();
         return Ok();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePost([FromRoute] int id) {
-        var post = await _dbContext.Posts.FirstOrDefaultAsync(p => p.Id == id);
+        var post = await _postService.GetByIdAsync(id);
         if(post is null) return NotFound();
-        _dbContext.Posts.Remove(post);
-        await _dbContext.SaveChangesAsync();
+        await _postService.DeleteAsync(post);
         return Ok();
     }
 }

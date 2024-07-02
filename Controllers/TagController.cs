@@ -7,16 +7,14 @@ namespace Blog.Api;
 [ApiController]
 public class TagController : ControllerBase
 {
-    private readonly BloggingContext _dbContext;
-    public TagController(BloggingContext dbContext) {
-        _dbContext = dbContext;
+    private readonly ITagService _tagService;
+    public TagController(ITagService tagService) {
+        _tagService = tagService;
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTag([FromRoute] int id) {
-        var tag = await _dbContext.Tags
-                                .Include(t => t.Posts)
-                                .FirstOrDefaultAsync(t => t.Id == id);
+        var tag = await _tagService.GetByIdAsync(id);
         if(tag is null) return NotFound();
         var tagRes = tag.toTagSummaryResponse();
         return Ok(tagRes);
@@ -25,18 +23,16 @@ public class TagController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTag([FromBody] CreateTagRequest req) {
         var tag = req.toTagFromCreateRequest();
-        await _dbContext.Tags.AddAsync(tag);
-        await _dbContext.SaveChangesAsync();
-        return Ok();
+        await _tagService.CreateAsync(tag);
+        return Created();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTag([FromRoute] int id)
     {
-        var tag = await _dbContext.Tags.FirstOrDefaultAsync(t => t.Id == id);
+        var tag = await _tagService.GetByIdAsync(id);
         if(tag is null) return NotFound();
-        _dbContext.Tags.Remove(tag);
-        await _dbContext.SaveChangesAsync();
+        await _tagService.DeleteAsync(tag);
         return Ok();
     }
 }
