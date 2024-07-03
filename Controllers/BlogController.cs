@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Api;
@@ -13,6 +14,7 @@ public class BlogController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAllBlogs([FromQuery] BlogQuery query) {
         var blogs = await _blogService.GetAllAsync(query);
         var blogsRes = blogs.Select(b => b.toBlogSummaryResponse());
