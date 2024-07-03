@@ -2,13 +2,6 @@
 
 public static class PersonMapper
 {
-    // CreateReq -> Person
-    public static Person toPersonFromCreateRequest(this CreatePersonRequest req) {
-        return new Person() {
-            Name = req.Name
-        };
-    }
-
     // CreatePhotoReq -> PersonPhoto
     public static PersonPhoto toPersonPhotoFromCreateRequest(this CreatePersonPhotoRequest req, Person person) {
         return new PersonPhoto() {
@@ -22,7 +15,8 @@ public static class PersonMapper
     public static PersonSummaryResponse toPersonSummaryResponse(this Person person) {
         return new PersonSummaryResponse(
             person.Id,
-            person.Name
+            person.Name,
+            person.Email
         );
     }
 

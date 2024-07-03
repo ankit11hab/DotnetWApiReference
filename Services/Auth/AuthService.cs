@@ -23,12 +23,15 @@ public class AuthService : IAuthService
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var claims = new[]
+        var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, person.Id.ToString()),
             new Claim(ClaimTypes.Name, person.Name!),
             new Claim(ClaimTypes.Email, person.Email!)
         };
+        foreach(var role in person.Roles) {
+            claims.Add(new Claim(ClaimTypes.Role, role.Id));
+        }
         var token = new JwtSecurityToken(
             issuer: _config["JwtSettings:Issuer"],
             audience: _config["JwtSettings:Audience"],
@@ -41,7 +44,9 @@ public class AuthService : IAuthService
 
     public async Task<Person?> GetPersonByEmail(string email)
     {
-        var user = await _dbContext.Persons.FirstOrDefaultAsync(u => u.Email == email);
+        var user = await _dbContext.Persons
+                                    .Include(p => p.Roles)
+                                    .FirstOrDefaultAsync(u => u.Email == email);
         return user;
     }
 

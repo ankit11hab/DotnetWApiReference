@@ -17,6 +17,8 @@ public class Person
     [Required]
     [MaxLength(250)]
     public string Password { get; set; } = null!;
+    
+    public List<Role> Roles { get; set; } = new List<Role>();
 
     // Navs for one-to-many
     public List<Blog> OwnedBlogs { get; set; } = new List<Blog>();

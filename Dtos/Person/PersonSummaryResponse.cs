@@ -3,5 +3,6 @@
 public record class PersonSummaryResponse
 (
     int Id,
-    string Name
+    string Name,
+    string Email
 );

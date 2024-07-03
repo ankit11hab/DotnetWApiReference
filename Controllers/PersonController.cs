@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Api;
@@ -13,6 +14,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllPersons()
     {
         var persons = await _personService.GetAllAsync();
@@ -21,20 +23,13 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize] // Access to every authorized users
     public async Task<IActionResult> GetPersonById([FromRoute] int id)
     {
         var person = await _personService.GetByIdAsync(id);
         if(person is null) return NotFound();
         var personRes = person.toPersonDetailResponse();
         return Ok(personRes);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CreatePerson([FromBody] CreatePersonRequest req)
-    {
-        var person = req.toPersonFromCreateRequest();
-        await _personService.CreateAsync(person);
-        return Created();
     }
 
     [HttpPost("photo")]
