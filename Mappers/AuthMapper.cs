@@ -7,7 +7,8 @@ public static class AuthMapper
         return new Person() {
             Name = req.Name,
             Email = req.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(req.Password)
+            Password = BCrypt.Net.BCrypt.HashPassword(req.Password),
+            Roles = new List<Role>()
         };
     }
 }

@@ -55,4 +55,10 @@ public class AuthService : IAuthService
         await _dbContext.Persons.AddAsync(person);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<List<Role>> AddUserRole()
+    {
+        var roles = await _dbContext.Roles.Where(r => r.Id=="User").ToListAsync();
+        return roles;
+    }
 }

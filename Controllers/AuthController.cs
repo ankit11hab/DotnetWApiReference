@@ -34,6 +34,7 @@ public class AuthController : ControllerBase
         var checkUser = await _authService.GetPersonByEmail(req.Email);
         if(checkUser != null) return new RegisterResponse(false, "User already exists");
         var user = req.toPersonFromRegisterRequest();
+        user.Roles = await _authService.AddUserRole();
         await _authService.AddUser(user);
         return new RegisterResponse(true, "Registration Successful");
     }
