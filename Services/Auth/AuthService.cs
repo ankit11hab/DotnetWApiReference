@@ -11,11 +11,9 @@ public class AuthService : IAuthService
 {
     private readonly BloggingContext _dbContext;
     private readonly IConfiguration _config;
-    private readonly IPersonService _personService;
-    public AuthService(BloggingContext dbContext, IConfiguration config, IPersonService personService) {
+    public AuthService(BloggingContext dbContext, IConfiguration config) {
         _dbContext = dbContext;
         _config = config;
-        _personService = personService;
     }
 
     public string GenerateJwtToken(Person person)
